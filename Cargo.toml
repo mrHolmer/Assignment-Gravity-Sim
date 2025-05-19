@@ -2,5 +2,5 @@
 name = "Assignment-Gravity-Sim"
 readme = "README.md"
 [dependencies]
-rand = "0.9.1"
+rand = "0.8.5"
 macroquad = "0.4.14"
