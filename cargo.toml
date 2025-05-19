@@ -1,3 +1,7 @@
 [package]
 name = "Assignment-Gravity-Sim"
 readme = "README.md"
+[dependencies]
+std = "1.87.0"
+rand = "0.9.1"
+macroquad = "0.4.14"
