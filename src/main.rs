@@ -2,11 +2,12 @@
 extern crate macroquad;
 use macroquad::prelude::*;
 // use macroquad::shapes::* as macroquadshapes;
-
+extern crate num_traits;
+use num_traits::pow::Pow as Pow;
 
 //
 fn RandomNumberBt0and1() -> f64 {0.5}
-fn LocalDrawCircle<T>(a: f64, b: f64, c: f64, d: T) {
+fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) {
 	macroquad::prelude::draw_circle(a as f32, b as f32, c as f32, d)
 }
 
@@ -31,8 +32,8 @@ impl PlanetaryBody {
 	fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
 		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
 		let y_displacement: f64 = body_2.location[1] - body_1.location[1];
-		let distance: f64 = f64::sqrt(((x_displacement) ^ (2.0 as f64)) +((y_displacement) ^ (2.0 as f64)));
-		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / (distance ^ (2.0 as f64));
+		let distance: f64 = f64::sqrt(Pow((x_displacement), (2.0 as f64)) + Pow((y_displacement), (2.0 as f64)));
+		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / Pow(distance, (2.0 as f64));
 		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
 		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass);
 		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass);
@@ -45,7 +46,7 @@ impl PlanetaryBody {
 		self.location[1] = self.location[1] + self.velocity[1];
 	}
 
-	fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(((body_1.location[0] - body_2.location[0]) ^ (2.0 as f64)) +((body_1.location[1] - body_2.location[1]) ^ (2.0 as f64)))}
+	fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(Pow((body_1.location[0] - body_2.location[0]), (2.0 as f64)) + Pow((body_1.location[1] - body_2.location[1]), (2.0 as f64)))}
 	fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {(body_1.radius + body_2.radius) > (PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2))}
 } // this is the end of the impl block
 
@@ -68,7 +69,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 	
 	for i in 1..5 {
-		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: ({let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}), location: ({let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a})})
+		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: [{let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}], location: [{let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a}]})
 	}
 	
 	'main_cycle: loop {
