@@ -33,6 +33,7 @@ impl PlanetaryBody {
 		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
 		let y_displacement: f64 = body_2.location[1] - body_1.location[1];
 		let distance: f64 = f64::sqrt(Pow((x_displacement), 2) + Pow((y_displacement), 2));
+		if (distance = (0 as f64)) {break}
 		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / Pow(distance, 2);
 		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
 		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass);
@@ -51,13 +52,23 @@ impl PlanetaryBody {
 } // this is the end of the impl block
 
 
-fn Tick(planetary_bodies: &mut Vec<PlanetaryBody>) {
-	let unprocessed_bodies = &planetary_bodies[0..planetary_bodies.len()];
-	'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily
+fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, delta_time: f64) {
+	let unprocessed_bodies: &mut Vec::<PlanetaryBody> = &mut planetary_bodies_mr[0..planetary_bodies_mr.len()];
+	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
+	'gravity: loop {
+		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
+		let unprocessed_bodies: &mut Vec::<PlanetaryBody> = &mut unprocessed_bodies[1..unprocessed_bodies.len()];
+		for second_body in unprocessd_bodies {
+			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
+		}
+	}
+	for body in planetary_bodies_mr {
+		body.SelfAdjustLocationForVelocity(delta_time);
+	}
 }
 
-fn RenderBodies(PlanetaryBodies: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
-	for item in PlanetaryBodies {
+fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
+	for item in planetary_bodies_r {
 	LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
 	}
 }
@@ -68,14 +79,15 @@ async fn main() {  // This is the function that is normally set to immediately e
 	let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 	
-	for i in 1..5 {
+/*	for i in 1..5 {
 		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: [{let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}], location: [{let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a}]})
-	}
-	
+	} /*Temporarily removed so I try non-random start*/ */
+	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], position: [macroquad::prelude::screen_width() * 0.75, 0.0]})
+	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], position: [macroquad::prelude::screen_width() * 0.25, 0.0]})
 	'main_cycle: loop {
 		clear_background(WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		
+		PhysicsTick(&mut planetary_bodies, 1.0 as f64);
 	next_frame().await
 }
 	
