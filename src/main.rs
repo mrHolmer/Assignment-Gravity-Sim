@@ -45,7 +45,7 @@ fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
 }
 
 fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {sqrt(((body_1.location[0] - body_2.location[0]) ^ 2) +((body_1.location[1] - body_2.location[1]) ^ 2))}
-fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> Boolean {(body_1.radius + body_2.radius) > (PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2)}
+fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> Boolean {(body_1.radius + body_2.radius) > (PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2))}
 }
 
 
@@ -77,7 +77,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 	let mut view_attributes: (f64, f64, f64) = (screen_width() / 2, screen_height() / 2, 1.0);
 	
 	for i in 1..5 {
-		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * i, radius: screen_height() / 10, velocity: ({a: f64 = RandomNumberBt0and1() * 40 - 20; a}, {a: f64 = RandomNumberBt0and1() * 40 - 20; a}), location: ({a: f64 = (RandomNumberBt0and1() - 0.5) * screen_width(); a}, {a: f64 = (RandomNumberBt0and1() - 0.5) * screen_height(); a})}
+		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * i, radius: screen_height() / 10, velocity: ({a: f64 = RandomNumberBt0and1() * 40 - 20; a}, {a: f64 = RandomNumberBt0and1() * 40 - 20; a}), location: ({a: f64 = (RandomNumberBt0and1() - 0.5) * screen_width(); a}, {a: f64 = (RandomNumberBt0and1() - 0.5) * screen_height(); a})})
 	}
 	
 	'main_cycle loop {
