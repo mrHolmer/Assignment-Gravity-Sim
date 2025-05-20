@@ -1,6 +1,7 @@
 [package]
 name = "Assignment-Gravity-Sim"
 readme = "README.md"
+edition = "2024"
 [env]
 RUSTFLAGS = '--cfg getrandom_backend="wasm_js"'
 [dependencies]
