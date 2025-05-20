@@ -62,7 +62,7 @@ fn RenderBodies(PlanetaryBodies: &Vec<PlanetaryBody>, view_attributes: [f64; 3])
 	}
 }
 
-#[macroquad::main("gravity-sim-test")]
+#[macroquad::main("Assignment-Gravity-Sim")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
 	
 	let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
