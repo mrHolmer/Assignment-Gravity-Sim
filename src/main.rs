@@ -1,11 +1,14 @@
 //use rand::prelude::*;
+extern crate macroquad;
 use macroquad::prelude::*;
 // use macroquad::shapes::* as macroquadshapes;
 
 
 //
 fn RandomNumberBt0and1() -> f64 {0.5}
-
+fn LocalDrawCircle<T>(a: f64, b: f64, c: f64, d: T) {
+	macroquad::prelude::draw_circle(a as f32, b as f32, c as f32, d)
+}
 
 enum ResultOfFunctionCall {
 	FunctionCallSuccess,
@@ -25,50 +28,38 @@ struct PlanetaryBody {
 
 // The impl block defines properties of the type specified. Here, the type specified is PlanetaryBody. 
 impl PlanetaryBody {  
-
 	fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
-		
-	let x_displacement: f64 = body_2.location[0] - body_1.location[0]
-	let y_displacement: f64 = body_2.location[1] - body_1.location[1]
-let distance: f64 = f64::sqrt(((x_displacement) ^ 2) +((y_displacement) ^ 2))
-	let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / (distance ^ 2)
-	let vectors: ((f64, f64), (f64, f64)) = ((x_displacement / distance, y_displacement / distance), (0.0 - x_displacement / distance, 0.0 - y_displacement / distance))
-	body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass)
-	body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass)
-	body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass)
-	body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass)
-}
+		let x_displacement: f64 = body_2.location[0] - body_1.location[0]
+		let y_displacement: f64 = body_2.location[1] - body_1.location[1]
+		let distance: f64 = f64::sqrt(((x_displacement) ^ 2.0) +((y_displacement) ^ 2.0))
+		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / (distance ^ 2)
+		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]]
+		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass)
+		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass)
+		body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass)
+		body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass)
+	}
 
-fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
-	self.location[0] = self.location[0] + self.velocity[0];
-	self.location[1] = self.location[1] + self.velocity[1];
-}
+	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
+		self.location[0] = self.location[0] + self.velocity[0];
+		self.location[1] = self.location[1] + self.velocity[1];
+	}
 
-fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(((body_1.location[0] - body_2.location[0]) ^ 2) +((body_1.location[1] - body_2.location[1]) ^ 2))}
-fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {(body_1.radius + body_2.radius) > (PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2))}
-}
+	fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(((body_1.location[0] - body_2.location[0]) ^ 2) +((body_1.location[1] - body_2.location[1]) ^ 2))}
+	fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {(body_1.radius + body_2.radius) > (PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2))}
+} // this is the end of the impl block
 
 
 fn Tick(planetary_bodies: &mut Vec<PlanetaryBody>) {
-	{
-let unprocessed_bodies = &planetary_bodies[0..planetary_bodies.length()];
-'collision_checks:loop {break 'collision_checks;
-	
-} // check and handle collisions. break added temporarily
-}
-{
-	
-}
+	let unprocessed_bodies = &planetary_bodies[0..planetary_bodies.len()];
+	'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily
 }
 
 fn RenderBodies(PlanetaryBodies: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
 	for item in PlanetaryBodies {
-	macroquad::prelude::draw_circle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
+	LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
+	}
 }
-
-
-} // maybe add  -> ResultOfFunctionCall  as output?
-
 
 #[macroquad::main("Leo Malkovitch's Gravity Simulation Test")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
@@ -80,11 +71,11 @@ async fn main() {  // This is the function that is normally set to immediately e
 		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: ({a: f64 = RandomNumberBt0and1() * 40 - 20; a}, {a: f64 = RandomNumberBt0and1() * 40 - 20; a}), location: ({a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a})})
 	}
 	
-	'main_cycle loop {
+	'main_cycle: loop {
 		clear_background(WHITE)
 		RenderBodies(&planetary_bodies, view_attributes)
 		
-next_frame().await
+	next_frame().await
 }
 	
 }
