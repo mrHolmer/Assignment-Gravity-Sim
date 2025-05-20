@@ -30,7 +30,7 @@ impl PlanetaryBody {
 		
 	let x_displacement: f64 = body_2.location[0] - body_1.location[0]
 	let y_displacement: f64 = body_2.location[1] - body_1.location[1]
-let distance: f64 = sqrt((x_displacement) ^ 2) +((y_displacement) ^ 2))
+let distance: f64 = sqrt(((x_displacement) ^ 2) +((y_displacement) ^ 2))
 	let force: f64 = (UniversalGravitationalConstant * body_1.mass * body_2.mass / (distance ^ 2))
 	let vectors: ((f64, f64), (f64, f64)) = ((x_displacement / distance, y_displacement / distance), (0 - x_displacement / distance, 0 - y_displacement / distance))
 	body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass)
@@ -44,7 +44,7 @@ fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
 	self.location[1] = self.location[1] + self.velocity[1];
 }
 
-fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {sqrt((body_1.location[0] - body_2.location[0]) ^ 2) +((body_1.location[1] - body_2.location[1]) ^ 2))}
+fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {sqrt(((body_1.location[0] - body_2.location[0]) ^ 2) +((body_1.location[1] - body_2.location[1]) ^ 2))}
 fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> Boolean {(body_1.radius + body_2.radius) > (PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2)}
 }
 
