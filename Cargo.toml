@@ -8,6 +8,6 @@ imp = "0.1.0"
 num-traits = "0.2.19"
 rand = "0.8.5"
 macroquad = "0.4.14"
-[target.wasm32-unknown-unknown.env]
+[target.wasm32-unknown-unknown]
 rustflags = ['--cfg', 'getrandom_backend="wasm_js"']
 RUSTFLAGS = ['--cfg', 'getrandom_backend="wasm_js"']
