@@ -29,15 +29,15 @@ struct PlanetaryBody {
 // The impl block defines properties of the type specified. Here, the type specified is PlanetaryBody. 
 impl PlanetaryBody {  
 	fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
-		let x_displacement: f64 = body_2.location[0] - body_1.location[0]
-		let y_displacement: f64 = body_2.location[1] - body_1.location[1]
-		let distance: f64 = f64::sqrt(((x_displacement) ^ (2.0 as f64)) +((y_displacement) ^ (2.0 as f64)))
-		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / (distance ^ (2.0 as f64))
-		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]]
-		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass)
-		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass)
-		body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass)
-		body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass)
+		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
+		let y_displacement: f64 = body_2.location[1] - body_1.location[1];
+		let distance: f64 = f64::sqrt(((x_displacement) ^ (2.0 as f64)) +((y_displacement) ^ (2.0 as f64)));
+		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / (distance ^ (2.0 as f64));
+		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
+		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass);
+		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass);
+		body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass);
+		body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass);
 	}
 
 	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
