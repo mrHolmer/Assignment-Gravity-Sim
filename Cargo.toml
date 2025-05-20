@@ -2,6 +2,9 @@
 name = "Assignment-Gravity-Sim"
 readme = "README.md"
 [dependencies]
+imp = "0.1.0"
+getrandom = { version = "0.3", features = ["wasm_js"] }
 rand = "0.8.5"
 macroquad = "0.4.14"
-imp = "0.1.0"
+[env]
+RUSTFLAGS = '--cfg getrandom_backend="wasm_js"'
