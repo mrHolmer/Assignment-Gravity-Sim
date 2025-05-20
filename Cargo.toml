@@ -7,5 +7,6 @@ RUSTFLAGS = '--cfg getrandom_backend="wasm_js"'
 [dependencies]
 getrandom = { version = "0.3.3", features = ["wasm_js"] }
 imp = "0.1.0"
+num_traits = "0.2.19"
 rand = "0.8.5"
 macroquad = "0.4.14"
