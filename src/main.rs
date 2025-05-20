@@ -4,7 +4,7 @@ use macroquad::prelude::*;
 
 
 //
-fn RandomNumberBt0and1() - > f64 {0.5}
+fn RandomNumberBt0and1() -> f64 {0.5}
 
 
 enum ResultOfFunctionCall {
