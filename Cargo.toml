@@ -10,3 +10,4 @@ rand = "0.8.5"
 macroquad = "0.4.14"
 [target.wasm32-unknown-unknown.env]
 rustflags = ['--cfg', 'getrandom_backend="wasm_js"']
+RUSTFLAGS = ['--cfg', 'getrandom_backend="wasm_js"']
