@@ -53,7 +53,7 @@ impl PlanetaryBody {
 
 
 fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, delta_time: f64) {
-	let unprocessed_bodies: &mut Vec::<PlanetaryBody> = &mut planetary_bodies_mr[0..planetary_bodies_mr.len()];
+	let unprocessed_bodies: &mut [PlanetaryBody] = &mut planetary_bodies_mr[0..planetary_bodies_mr.len()];
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	'gravity: loop {
 		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
