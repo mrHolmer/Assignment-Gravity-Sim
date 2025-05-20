@@ -1,9 +1,11 @@
-use rand::prelude::*;
+//use rand::prelude::*;
 use macroquad::prelude::*;
 // use macroquad::shapes::* as macroquadshapes;
 
 
 //
+fn RandomNumberBt0and1() - > f64 {0.5}
+
 
 enum ResultOfFunctionCall {
 	FunctionCallSuccess,
@@ -75,7 +77,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 	let mut view_attributes: (f64, f64, f64) = (screen_width() / 2, screen_height() / 2, 1.0);
 	
 	for i in 1..5 {
-		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * i, radius: screen_height() / 10, velocity: ({a: f64 = rng.random() * 40 - 20; a}, {a: f64 = rng.random() * 40 - 20; a}), location: ({a: f64 = (rng.random() - 0.5) * screen_width(); a}, {a: f64 = (rng.random() - 0.5) * screen_height(); a})}
+		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * i, radius: screen_height() / 10, velocity: ({a: f64 = RandomNumberBt0and1() * 40 - 20; a}, {a: f64 = RandomNumberBt0and1() * 40 - 20; a}), location: ({a: f64 = (RandomNumberBt0and1() - 0.5) * screen_width(); a}, {a: f64 = (RandomNumberBt0and1() - 0.5) * screen_height(); a})}
 	}
 	
 	'main_cycle loop {
