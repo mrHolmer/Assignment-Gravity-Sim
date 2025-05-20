@@ -64,11 +64,11 @@ fn RenderBodies(PlanetaryBodies: &Vec<PlanetaryBody>, view_attributes: [f64; 3])
 #[macroquad::main("Leo Malkovitch's Gravity Simulation Test")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
 	
-	let mut planetary_bodies: Vec<PlanetaryBody> = Vec<PlanetaryBody>::with_capacity(64);
+	let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 	
 	for i in 1..5 {
-		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: ({let a: f64 = RandomNumberBt0and1() * 40 - 20; a}, {let a: f64 = RandomNumberBt0and1() * 40 - 20; a}), location: ({let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a})})
+		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: ({let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}), location: ({let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a})})
 	}
 	
 	'main_cycle: loop {
