@@ -19,8 +19,8 @@ const UniversalGravitationalConstant: f64 = 1.0;
 struct PlanetaryBody {
 	mass: f64,
 	radius: f64,
-	location: (f64, f64),
-	velocity: (f64, f64)
+	location: [f64, f64],
+	velocity: [f64, f64]
 }
 
 // The impl block defines properties of the type specified. Here, the type specified is PlanetaryBody. 
