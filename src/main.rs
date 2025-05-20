@@ -3,7 +3,7 @@ extern crate macroquad;
 use macroquad::prelude::*;
 // use macroquad::shapes::* as macroquadshapes;
 extern crate num_traits;
-use num_traits::pow::Pow as Pow;
+use num_traits::pow::pow as Pow;
 
 //
 fn RandomNumberBt0and1() -> f64 {0.5}
