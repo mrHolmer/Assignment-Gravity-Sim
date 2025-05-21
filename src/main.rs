@@ -7,7 +7,7 @@ use num_traits::pow::pow as Pow;
 
 //
 fn RandomNumberBt0and1() -> f64 {0.5}
-fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) {
+fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) { // called this because it's the local version
 	macroquad::prelude::draw_circle(a as f32, b as f32, c as f32, d)
 }
 
@@ -57,7 +57,7 @@ fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, delta_time: f64) {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	'gravity: loop {
 		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
-		let unprocessed_bodies: &mut Vec::<PlanetaryBody> = &mut unprocessed_bodies[1..unprocessed_bodies.len()];
+		let unprocessed_bodies: &mut [PlanetaryBody] = &mut unprocessed_bodies[1..unprocessed_bodies.len()];
 		for second_body in unprocessd_bodies {
 			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 		}
@@ -69,7 +69,7 @@ fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, delta_time: f64) {
 
 fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
 	for item in planetary_bodies_r {
-	LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
+		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
 	}
 }
 
