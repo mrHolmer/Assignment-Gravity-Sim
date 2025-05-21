@@ -58,7 +58,7 @@ fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: u
 	let mut i = 1
 	'gravity: loop {
 		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
-		if number_of_bodies - i = 1 {break 'gravity}
+		if {number_of_bodies - i = 1} {break 'gravity}
 		let unprocessed_bodies: &mut [PlanetaryBody] = &mut unprocessed_bodies[1..number_of_bodies - i];
 		for second_body in unprocessed_bodies {
 			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
