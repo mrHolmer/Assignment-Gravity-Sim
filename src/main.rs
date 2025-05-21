@@ -82,13 +82,13 @@ async fn main() {  // This is the function that is normally set to immediately e
 /*	for i in 1..5 {
 		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: [{let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}], location: [{let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a}]})
 	} /*Temporarily removed so I try non-random start*/ */
-	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], position: [macroquad::prelude::screen_width() * 0.75, 0.0]})
-	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], position: [macroquad::prelude::screen_width() * 0.25, 0.0]})
+	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], position: [macroquad::prelude::screen_width() * 0.75, 0.0]});
+	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], position: [macroquad::prelude::screen_width() * 0.25, 0.0]});
 	'main_cycle: loop {
 		clear_background(WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
 		PhysicsTick(&mut planetary_bodies, 1.0 as f64);
-	next_frame().await
-}
+		next_frame().await
+	}
 	
 }
