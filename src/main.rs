@@ -52,14 +52,23 @@ impl PlanetaryBody {
 } // this is the end of the impl block
 
 
-fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
+fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	let mut lower_index = 1;
 	'gravity: loop {
-		let first_body: &mut PlanetaryBody = &mut planetary_bodies_mr;
+		let first_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(lower_index - 1);
+		let first_body = match first_body_opt {
+			None: {println!("Somehow, planetary_bodies changed while  the PhysicsTick function was doing stuff. How? We don't know."), break},
+			Some(k): k
+		}
 		if number_of_bodies - lower_index == 1 {break 'gravity}
 		for second_index in [lower_index..number_of_bodies] {
-			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, &mut planetary_bodies_mr[second_index], delta_time);
+			let second_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(second_index)
+			let second_body = match second_body_opt {
+				None: {println!("Somehow, planetary_bodies changed while  the PhysicsTick function was doing stuff. How? We don't know."), break},
+				Some(k): k
+			}
+			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 		}
 		lower_index += 1
 	}
@@ -92,7 +101,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 		{
 			templen += planetary_bodies.len()
 		}
-		PhysicsTick(&mut planetary_bodies, templen, 1.0 as f64);
+		PhysicsTick(&planetary_bodies, templen, 1.0 as f64);
 		next_frame().await
 	}
 	
