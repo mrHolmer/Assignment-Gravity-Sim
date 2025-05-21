@@ -58,12 +58,9 @@ fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: u
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	
 	for first_index in 1..(number_of_bodies-1) {
-		//let first_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(lower_index - 1);
-		if let Some(first_body) = planetary_bodies_mr.get_mut(first_index - 1) {
-			for second_index in first_index..number_of_bodies {
-				if let Some(second_body) = planetary_bodies_mr.get_mut(second_index) {
-					PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
-				};
+		for second_index in first_index..number_of_bodies {
+			if let (Some(second_body), Some(first_body)) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1)) {
+				PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 			};
 		};
 		//if number_of_bodies - lower_index == 1 
