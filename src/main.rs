@@ -57,7 +57,8 @@ fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, delta_time: f64) {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	'gravity: loop {
 		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
-		let unprocessed_bodies: &mut [PlanetaryBody] = &mut unprocessed_bodies[1..unprocessed_bodies.len()];
+		let lentemp: u64 = unprocessed_bodies.len()
+		let unprocessed_bodies: &mut [PlanetaryBody] = &mut unprocessed_bodies[1..lentemp];
 		for second_body in unprocessed_bodies {
 			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 		}
@@ -82,8 +83,8 @@ async fn main() {  // This is the function that is normally set to immediately e
 /*	for i in 1..5 {
 		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: [{let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}], location: [{let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a}]})
 	} /*Temporarily removed so I try non-random start*/ */
-	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], position: [macroquad::prelude::screen_width() * 0.75, 0.0]});
-	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], position: [macroquad::prelude::screen_width() * 0.25, 0.0]});
+	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], location: [macroquad::prelude::screen_width() * 0.75, 0.0]});
+	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], location: [macroquad::prelude::screen_width() * 0.25, 0.0]});
 	'main_cycle: loop {
 		clear_background(WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
