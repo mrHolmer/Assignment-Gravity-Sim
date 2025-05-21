@@ -58,14 +58,14 @@ fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize,
 	'gravity: loop {
 		let first_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(lower_index - 1);
 		let mut first_body: &mut PlanetaryBody = match first_body_opt {
-			None: {println!("Somehow, planetary_bodies changed while  the PhysicsTick function was doing stuff. How? We don't know."), break},
+			None: {println!("Somehow, planetary_bodies changed while  the PhysicsTick function was doing stuff. How? We don't know."); break},
 			Some(k): k
 		}
 		if number_of_bodies - lower_index == 1 {break 'gravity}
 		for second_index in [lower_index..number_of_bodies] {
 			let second_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(second_index)
 			let mut second_body: &mut PlanetaryBody = match second_body_opt {
-				None: {println!("Somehow, planetary_bodies changed while  the PhysicsTick function was doing stuff. How? We don't know."), break},
+				None: {println!("Somehow, planetary_bodies changed while  the PhysicsTick function was doing stuff. How? We don't know."); break},
 				Some(k): k
 			}
 			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
