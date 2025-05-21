@@ -72,8 +72,8 @@ fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize,
 		}
 		lower_index += 1
 	}
-	for body in planetary_bodies_mr {
-		body.SelfAdjustLocationForVelocity(delta_time);
+	for index in [0..number_of_bodies - 1] {
+		planetary_bodies_r.get_mut(index).SelfAdjustLocationForVelocity(delta_time);
 	}
 }
 
