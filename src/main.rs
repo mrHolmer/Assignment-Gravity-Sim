@@ -43,8 +43,8 @@ impl PlanetaryBody {
 	}
 
 	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
-		self.location[0] = self.location[0] + self.velocity[0];
-		self.location[1] = self.location[1] + self.velocity[1];
+		self.location[0] = self.location[0] + self.velocity[0] * delta_time;
+		self.location[1] = self.location[1] + self.velocity[1] * delta_time;
 	}
 
 	fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(Pow((body_1.location[0] - body_2.location[0]), 2) + Pow((body_1.location[1] - body_2.location[1]), 2))}
@@ -55,13 +55,13 @@ impl PlanetaryBody {
 fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
 	let unprocessed_bodies: &[PlanetaryBody] = &planetary_bodies_mr[0..number_of_bodies];
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
-	let mut i = 1
+	let mut i = 1;
 	'gravity: loop {
 		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
 		if number_of_bodies - i == 1 {break 'gravity}
 		let unprocessed_bodies: &[PlanetaryBody] = &unprocessed_bodies[1..number_of_bodies - i];
 		for second_body in unprocessed_bodies {
-			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
+			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, &mut second_body, delta_time);
 		}
 		i += 1
 	}
