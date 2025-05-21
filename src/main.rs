@@ -1,8 +1,8 @@
-#[derive(Debug)]
 
 //use rand::prelude::*;
 extern crate macroquad;
 use macroquad::prelude::*;
+use std::borrow::BorrowMut;
 // use macroquad::shapes::* as macroquadshapes;
 extern crate num_traits;
 use num_traits::pow::pow as Pow;
@@ -21,7 +21,7 @@ enum ResultOfFunctionCall {
 // const UniversalGravitationalConstant: f64 = (6.6743015 / (10 ^ 11));
 const UniversalGravitationalConstant: f64 = 1.0;
 //
-
+#[derive(Debug)]
 struct PlanetaryBody {
 	mass: f64,
 	radius: f64,
@@ -57,10 +57,10 @@ impl PlanetaryBody {
 fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	
-	for first_index in [1..number_of_bodies-1] {
+	for first_index in 1..(number_of_bodies-1) {
 		//let first_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(lower_index - 1);
 		if let Some(first_body) = planetary_bodies_r.get_mut(first_index - 1) {
-			for second_index in [first_index..number_of_bodies] {
+			for second_index in first_index..number_of_bodies {
 				if let Some(second_body) = planetary_bodies_r.get_mut(second_index) {
 					PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 				};
@@ -68,7 +68,7 @@ fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize,
 		};
 		//if number_of_bodies - lower_index == 1 
 	}
-	for index in [0..number_of_bodies - 1] {
+	for index in 0..(number_of_bodies - 1) {
 		if let Some(body) = planetary_bodies_r.borrow_mut(index){
 			body.SelfAdjustLocationForVelocity(delta_time);
 		};
