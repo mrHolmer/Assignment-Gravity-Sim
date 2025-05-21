@@ -54,8 +54,8 @@ impl PlanetaryBody {
 
 fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
-	let mut lower_index = 1;
-	'gravity: loop {
+	
+	for lower_index_2 in [1..number_of_bodies-2] {
 		//let first_body_opt: Option::<&mut PlanetaryBody> = planetary_bodies_r.get_mut(lower_index - 1);
 		if let Some(first_body) = planetary_bodies_r.get_mut(lower_index - 1) {
 			for second_index in [lower_index..number_of_bodies] {
@@ -64,11 +64,12 @@ fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize,
 				};
 			};
 		};
-		lower_index += 1;
-		if number_of_bodies - lower_index == 1 {break 'gravity}
+		//if number_of_bodies - lower_index == 1 
 	}
 	for index in [0..number_of_bodies - 1] {
-		planetary_bodies_r.get_mut(index).SelfAdjustLocationForVelocity(delta_time);
+		if let Some(body) = planetary_bodies_r.get_mut(index){
+			body.SelfAdjustLocationForVelocity(delta_time);
+		};
 	}
 }
 
