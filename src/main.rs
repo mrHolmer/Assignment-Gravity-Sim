@@ -90,7 +90,11 @@ async fn main() {  // This is the function that is normally set to immediately e
 	'main_cycle: loop {
 		clear_background(WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		PhysicsTick(&mut planetary_bodies, planetary_bodies.len(), 1.0 as f64);
+		let mut templen = 0;
+		{
+			templen += planetary_bodies.len()
+		}
+		PhysicsTick(&mut planetary_bodies, templen, 1.0 as f64);
 		next_frame().await
 	}
 	
