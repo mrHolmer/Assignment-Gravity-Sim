@@ -53,17 +53,15 @@ impl PlanetaryBody {
 
 
 fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
-	let unprocessed_bodies: &[PlanetaryBody] = &planetary_bodies_mr[0..number_of_bodies];
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
-	let mut i = 1;
+	let mut lower_index = 1;
 	'gravity: loop {
-		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
-		if number_of_bodies - i == 1 {break 'gravity}
-		let unprocessed_bodies: &[PlanetaryBody] = &unprocessed_bodies[1..number_of_bodies - i];
-		for second_body in unprocessed_bodies {
-			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, &mut second_body, delta_time);
+		let first_body: &mut PlanetaryBody = &mut planetary_bodies_mr;
+		if number_of_bodies - lower_index == 1 {break 'gravity}
+		for second_index in [lower_index..number_of_bodies] {
+			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, &mut planetary_bodies_mr[second_index], delta_time);
 		}
-		i += 1
+		lower_index += 1
 	}
 	for body in planetary_bodies_mr {
 		body.SelfAdjustLocationForVelocity(delta_time);
