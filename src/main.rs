@@ -59,7 +59,8 @@ fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: u
 	
 	for first_index in 1..(number_of_bodies-1) {
 		for second_index in first_index..number_of_bodies {
-			if let (Some(second_body), Some(first_body)) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1)) {
+			let tupbodies: (Option(&mut PlanetaryBody), Option(&mut PlanetaryBody)) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1))
+			if let (Some(second_body), Some(first_body)) = tupbodies {
 				PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 			};
 		};
