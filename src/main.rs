@@ -52,16 +52,18 @@ impl PlanetaryBody {
 } // this is the end of the impl block
 
 
-fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, delta_time: f64) {
+fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
 	let unprocessed_bodies: &mut [PlanetaryBody] = &mut planetary_bodies_mr[0..planetary_bodies_mr.len()];
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
+	let mut i = 1
 	'gravity: loop {
 		let first_body: &mut PlanetaryBody = &mut unprocessed_bodies[0];
-		let lentemp: usize = unprocessed_bodies.len();
-		let unprocessed_bodies: &mut [PlanetaryBody] = &mut unprocessed_bodies[1..lentemp];
+		if number_of_bodies - i = 1 {break 'gravity}
+		let unprocessed_bodies: &mut [PlanetaryBody] = &mut unprocessed_bodies[1..number_of_bodies - i];
 		for second_body in unprocessed_bodies {
 			PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
 		}
+		i += 1
 	}
 	for body in planetary_bodies_mr {
 		body.SelfAdjustLocationForVelocity(delta_time);
@@ -88,7 +90,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 	'main_cycle: loop {
 		clear_background(WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		PhysicsTick(&mut planetary_bodies, 1.0 as f64);
+		PhysicsTick(&mut planetary_bodies, planetary_bodies.len(), 1.0 as f64);
 		next_frame().await
 	}
 	
