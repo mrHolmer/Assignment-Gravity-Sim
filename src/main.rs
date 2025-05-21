@@ -98,6 +98,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 			templen += planetary_bodies.len()
 		}
 		PhysicsTick(&planetary_bodies, templen, 1.0 as f64);
+		println!("{:#?}", &planetary_bodies);
 		next_frame().await
 	}
 	
