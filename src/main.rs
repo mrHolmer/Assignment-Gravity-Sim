@@ -33,7 +33,7 @@ impl PlanetaryBody {
 		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
 		let y_displacement: f64 = body_2.location[1] - body_1.location[1];
 		let distance: f64 = f64::sqrt(Pow((x_displacement), 2) + Pow((y_displacement), 2));
-		if (distance = (0 as f64)) {break}
+		// if distance = (0 as f64) {break} // this should throw an error somehow
 		let force: f64 = UniversalGravitationalConstant * body_1.mass * body_2.mass / Pow(distance, 2);
 		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
 		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass);
