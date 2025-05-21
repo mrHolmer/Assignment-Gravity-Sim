@@ -68,7 +68,7 @@ fn PhysicsTick(planetary_bodies_r: &Vec<PlanetaryBody>, number_of_bodies: usize,
 	}
 	for index in [0..number_of_bodies - 1] {
 		if let Some(body) = planetary_bodies_r.get_mut(index){
-			body.SelfAdjustLocationForVelocity(delta_time);
+			body.unwrap().SelfAdjustLocationForVelocity(delta_time);
 		};
 	}
 }
