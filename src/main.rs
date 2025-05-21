@@ -54,23 +54,25 @@ impl PlanetaryBody {
 } // this is the end of the impl block
 
 
-fn PhysicsTick(planetary_bodies_mr: &mut Vec<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) {
+fn PhysicsTick(planetary_bodies: Vec::<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) -> Vec::<PlanetaryBody> {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
-	
+	for index in 0..(number_of_bodies - 1) {
+		planetary_bodies[index].SelfAdjustLocationForVelocity(delta_time)
+		//if let Some(body) = planetary_bodies_mr.get_mut(index){
+		//	body.SelfAdjustLocationForVelocity(delta_time);
+		//};
+	}
 	for first_index in 1..(number_of_bodies-1) {
 		for second_index in first_index..number_of_bodies {
-			let tupbodies: (Option(&mut PlanetaryBody), Option(&mut PlanetaryBody)) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1))
-			if let (Some(second_body), Some(first_body)) = tupbodies {
-				PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
-			};
+			PlanetaryBody::PairwiseAdjustVelocityForGravity(&mut planetary_bodies[first_index], &mut planetary_bodies[second_index], delta_time);
+			//let tupbodies: (Option::<&mut PlanetaryBody>, Option::<&mut PlanetaryBody>) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1))
+			//if let (Some(second_body), Some(first_body)) = tupbodies {
+			//	PlanetaryBody::PairwiseAdjustVelocityForGravity(first_body, second_body, delta_time);
+			//};
 		};
 		//if number_of_bodies - lower_index == 1 
-	}
-	for index in 0..(number_of_bodies - 1) {
-		if let Some(body) = planetary_bodies_mr.get_mut(index){
-			body.SelfAdjustLocationForVelocity(delta_time);
-		};
-	}
+	};
+	return planetary_bodies
 }
 
 fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
@@ -97,7 +99,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 		{
 			templen += planetary_bodies.len()
 		}
-		PhysicsTick(&mut planetary_bodies, templen, 1.0 as f64);
+		planetary_bodies = PhysicsTick(planetary_bodies, templen, 1.0 as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
 		println!("{:#?}", &planetary_bodies);
 		next_frame().await
 	}
