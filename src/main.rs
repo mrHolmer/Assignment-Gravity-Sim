@@ -21,7 +21,7 @@ enum ResultOfFunctionCall {
 // const UniversalGravitationalConstant: f64 = (6.6743015 / (10 ^ 11));
 const UniversalGravitationalConstant: f64 = 1.0;
 //
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct PlanetaryBody {
 	mass: f64,
 	radius: f64,
@@ -31,7 +31,7 @@ struct PlanetaryBody {
 
 // The impl block defines properties of the type specified. Here, the type specified is PlanetaryBody. 
 impl PlanetaryBody {  
-	fn SelfAdjustVelocityForGravityToOtherObject(self: Self, body_2_r: &PlanetaryBody, delta_time: f64) -> PlanetaryBody {
+	fn SelfAdjustVelocityForGravityToOtherObject(mut self, body_2_r: &PlanetaryBody, delta_time: f64) -> PlanetaryBody {
 		let x_displacement: f64 = body_2_r.location[0] - self.location[0];
 		let y_displacement: f64 = body_2_r.location[1] - self.location[1];
 		let distance: f64 = f64::sqrt(Pow((x_displacement), 2) + Pow((y_displacement), 2));
