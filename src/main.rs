@@ -74,8 +74,8 @@ fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, number_of_bodies: usi
 	}
 	for first_index in 1..(number_of_bodies-1) {
 		for second_index in first_index..number_of_bodies {
-			planetary_bodies[first_index] = planetary_bodies[first_index].SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies[second_index], delta_time);
-			planetary_bodies[second_index] = planetary_bodies[second_index].SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies[first_index], delta_time);
+			planetary_bodies[first_index] = planetary_bodies[first_index].clone().SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies[second_index], delta_time);
+			planetary_bodies[second_index] = planetary_bodies[second_index].clone().SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies[first_index], delta_time);
 			//PlanetaryBody::PairwiseAdjustVelocityForGravity(planetary_bodies.get_mut(first_index).unwrap(), planetary_bodies.get_mut(second_index).unwrap(), delta_time);
 			//let tupbodies: (Option::<&mut PlanetaryBody>, Option::<&mut PlanetaryBody>) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1))
 			//if let (Some(second_body), Some(first_body)) = tupbodies {
