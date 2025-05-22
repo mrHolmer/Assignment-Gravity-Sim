@@ -31,7 +31,7 @@ struct PlanetaryBody {
 
 // The impl block defines properties of the type specified. Here, the type specified is PlanetaryBody. 
 impl PlanetaryBody {  
-	fn SelfAdjustVelocityForGravityToOtherObject(&mut self, body_2_r: &PlanetaryBody, delta_time: f64) {
+	fn SelfAdjustVelocityForGravityToOtherObject(self: Self, body_2_r: &PlanetaryBody, delta_time: f64) {
 		let x_displacement: f64 = body_2_r.location[0] - self.location[0];
 		let y_displacement: f64 = body_2_r.location[1] - self.location[1];
 		let distance: f64 = f64::sqrt(Pow((x_displacement), 2) + Pow((y_displacement), 2));
@@ -39,6 +39,7 @@ impl PlanetaryBody {
 		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
 		self.velocity[0] += (delta_time * force * vectors[0][0] / self.mass);
 		self.velocity[1] += (delta_time * force * vectors[0][1] / self.mass);
+		self
 	}
 	fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
 		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
@@ -73,8 +74,8 @@ fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, number_of_bodies: usi
 	}
 	for first_index in 1..(number_of_bodies-1) {
 		for second_index in first_index..number_of_bodies {
-			&mut planetary_bodies.first_index.SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies.second_index, delta_time);
-			&mut planetary_bodies.second_index.SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies.first_index, delta_time);
+			planetary_bodies[first_index] = planetary_bodies[first_index].SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies.second_index, delta_time);
+			planetary_bodies[second_index] = planetary_bodies[second_index].SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies.first_index, delta_time);
 			//PlanetaryBody::PairwiseAdjustVelocityForGravity(planetary_bodies.get_mut(first_index).unwrap(), planetary_bodies.get_mut(second_index).unwrap(), delta_time);
 			//let tupbodies: (Option::<&mut PlanetaryBody>, Option::<&mut PlanetaryBody>) = (planetary_bodies_mr.get_mut(second_index), planetary_bodies_mr.get_mut(first_index - 1))
 			//if let (Some(second_body), Some(first_body)) = tupbodies {
