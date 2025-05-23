@@ -64,8 +64,9 @@ impl PlanetaryBody {
 } // this is the end of the impl block
 
 
-fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, number_of_bodies: usize, delta_time: f64) -> Vec::<PlanetaryBody> {
+fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> Vec::<PlanetaryBody> {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
+	let number_of_bodies: usize = planetary_bodies.len();
 	for index in 0..(number_of_bodies - 1) {
 		planetary_bodies[index].SelfAdjustLocationForVelocity(delta_time)
 		//if let Some(body) = planetary_bodies_mr.get_mut(index){
@@ -107,11 +108,9 @@ async fn main() {  // This is the function that is normally set to immediately e
 	'main_cycle: loop {
 		clear_background(WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		let mut templen = 0;
-		{
-			templen += planetary_bodies.len()
-		}
-		planetary_bodies = PhysicsTick(planetary_bodies, templen, 1.0 as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
+	        let delta_time = get_frame_time();
+
+		planetary_bodies = PhysicsTick(planetary_bodies, delta_time as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
 		println!("{:#?}", &planetary_bodies);
 		next_frame().await
 	}
