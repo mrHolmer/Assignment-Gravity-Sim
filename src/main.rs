@@ -20,6 +20,12 @@ enum ResultOfFunctionCall {
 
 // const UniversalGravitationalConstant: f64 = (6.6743015 / (10 ^ 11));
 const UniversalGravitationalConstant: f64 = 1.0;
+let const COLOUR_BLACK: macroquad::color::Color = macroquad::color::Color::new(0.00, 0.00, 0.00, 1.00);
+let const COLOUR_WHITE: macroquad::color::Color = macroquad::color::Color::new(1.00, 1.00, 1.00, 1.00);
+let const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap();
+let const FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").await.unwrap();
+
+
 //
 #[derive(Debug, Clone)]
 struct PlanetaryBody {
@@ -90,29 +96,26 @@ fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> V
 
 fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
 	for item in planetary_bodies_r {
-		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
+		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], COLOUR_BLACK)
 	}
 }
 
 #[macroquad::main("Assignment-Gravity-Sim")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
-	
-	let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
-	
-/*	for i in 1..5 {
-		planetary_bodies.push(PlanetaryBody {mass: 1.0 + 0.25 * (i as f64), radius: (macroquad::prelude::screen_height() as f64) / 10.0, velocity: [{let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}, {let a: f64 = RandomNumberBt0and1() * 40.0 - 20.0; a}], location: [{let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_width() as f64); a}, {let a: f64 = (RandomNumberBt0and1() - 0.5) * (macroquad::prelude::screen_height() as f64); a}]})
-	} /*Temporarily removed so I try non-random start*/ */
+		let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], location: [{macroquad::prelude::screen_width() * 0.75} as f64, 0.0]});
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], location: [{macroquad::prelude::screen_width() * 0.25} as f64, 0.0]});
 	'main_cycle: loop {
-		clear_background(WHITE);
+		clear_background(COLOUR_WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-	        let delta_time = get_frame_time();
+		macroquad::text::draw_text(view_attributes[0], view_attributes[1], 20.0, COLOUR_BLACK);
+		println!("{:#?}", &planetary_bodies);
+ 		
+		let delta_time = get_frame_time();
 
 		planetary_bodies = PhysicsTick(planetary_bodies, delta_time as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
-		println!("{:#?}", &planetary_bodies);
-		next_frame().await
+				next_frame().await
 	}
 	
 }
