@@ -22,8 +22,6 @@ enum ResultOfFunctionCall {
 const UniversalGravitationalConstant: f64 = 1.0;
 const COLOUR_BLACK: macroquad::color::Color = macroquad::color::Color::new(0.00, 0.00, 0.00, 1.00);
 const COLOUR_WHITE: macroquad::color::Color = macroquad::color::Color::new(1.00, 1.00, 1.00, 1.00);
-const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").unwrap();
-const FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").unwrap();
 
 
 //
@@ -103,6 +101,9 @@ fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 
 #[macroquad::main("Assignment-Gravity-Sim")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
 	let mut fonts = Fonts::default();
+	const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap();
+	const FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").await.unwrap();
+	
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 		let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], location: [{macroquad::prelude::screen_width() * 0.75} as f64, 0.0]});
