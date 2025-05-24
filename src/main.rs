@@ -98,11 +98,11 @@ async fn main() {  // This is the function that is normally set to immediately e
 	'main_cycle: loop {
 		clear_background(COLOUR_WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		{
+		/*{
 			let font = FONT_SPECTRAL_LIGHT.clone();
 			macroquad::text::draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, COLOUR_BLACK);
 			macroquad::text::draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
-		}
+		}*/
 		//fonts.draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, COLOUR_BLACK);
 		//fonts.draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
 		println!("{:#?}", &planetary_bodies);
