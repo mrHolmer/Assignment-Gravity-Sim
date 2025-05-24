@@ -102,6 +102,7 @@ fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 
 
 #[macroquad::main("Assignment-Gravity-Sim")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
+	let mut fonts = Fonts::default();
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 		let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], location: [{macroquad::prelude::screen_width() * 0.75} as f64, 0.0]});
@@ -109,7 +110,10 @@ async fn main() {  // This is the function that is normally set to immediately e
 	'main_cycle: loop {
 		clear_background(COLOUR_WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		macroquad::text::draw_text(view_attributes[0], view_attributes[1], 20.0, COLOUR_BLACK);
+		macroquad::text::draw_text("hello", view_attributes[0], view_attributes[1], 20.0, COLOUR_BLACK);
+		macroquad::text::draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
+		fonts.draw_text("hello", view_attributes[0], view_attributes[1], 20.0, COLOUR_BLACK);
+		fonts.draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
 		println!("{:#?}", &planetary_bodies);
  		
 		let delta_time = get_frame_time();
