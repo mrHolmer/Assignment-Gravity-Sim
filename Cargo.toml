@@ -5,6 +5,7 @@ edition = "2024"
 [dependencies]
 num-traits = "0.2.19"
 macroquad = "0.4.14"
+console_error_panic_hook = "0.1.7"
 [target.wasm32-unknown-unknown]
 rustflags = ['--cfg', 'getrandom_backend="wasm_js"']
 RUSTFLAGS = ['--cfg', 'getrandom_backend="wasm_js"']
