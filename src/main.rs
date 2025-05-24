@@ -101,7 +101,7 @@ fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 
 #[macroquad::main("Assignment-Gravity-Sim")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
 	let mut fonts = Fonts::default();
-	const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap();
+	const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap(); // Claims that .await is only allowed inside async function, so i moved it here. However, it's still complaining.
 	const FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").await.unwrap();
 	
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
@@ -111,9 +111,9 @@ async fn main() {  // This is the function that is normally set to immediately e
 	'main_cycle: loop {
 		clear_background(COLOUR_WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
-		macroquad::text::draw_text("hello", view_attributes[0], view_attributes[1], 20.0, COLOUR_BLACK);
+		macroquad::text::draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, COLOUR_BLACK);
 		macroquad::text::draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
-		fonts.draw_text("hello", view_attributes[0], view_attributes[1], 20.0, COLOUR_BLACK);
+		fonts.draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, COLOUR_BLACK);
 		fonts.draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
 		println!("{:#?}", &planetary_bodies);
  		
