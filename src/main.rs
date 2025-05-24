@@ -22,8 +22,8 @@ enum ResultOfFunctionCall {
 const UniversalGravitationalConstant: f64 = 1.0;
 const COLOUR_BLACK: macroquad::color::Color = macroquad::color::Color::new(0.00, 0.00, 0.00, 1.00);
 const COLOUR_WHITE: macroquad::color::Color = macroquad::color::Color::new(1.00, 1.00, 1.00, 1.00);
-const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap();
-const FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").await.unwrap();
+const FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").unwrap();
+const FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").unwrap();
 
 
 //
