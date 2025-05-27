@@ -1,27 +1,22 @@
 
-//use rand::prelude::*;
 extern crate macroquad;
 use macroquad::prelude::*;
-// use macroquad::shapes::* as macroquadshapes;
 extern crate num_traits;
 use num_traits::pow::pow as Pow;
-//
-//extern crate console_error_panic_hook;
+//extern crate console_error_panic_hook; // causes gray screen
 //use std::panic;
-//
 
-//
+
+
 fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) { // called this because it's the local version
 	macroquad::prelude::draw_circle(a as f32, b as f32, c as f32, d)
 }
 
 // const UNIVERSAL_GRAVITATIONAL_CONSTANT: f64 = (6.6743015 / (10 ^ 11)); // Commented out to make physics not require huge values for mass to do gravity
 const UNIVERSAL_GRAVITATIONAL_CONSTANT: f64 = 1.0;
-//const COLOUR_BLACK: macroquad::color::Color = macroquad::color::Color::new(0.00, 0.00, 0.00, 1.00);
-//const COLOUR_WHITE: macroquad::color::Color = macroquad::color::Color::new(1.00, 1.00, 1.00, 1.00);
+const COLOUR_WHITE = macroquad::prelude::WHITE;
+const COLOUR_BLACK = macroquad::prelude::BLACK;
 
-
-//
 #[derive(Debug, Clone)]
 struct PlanetaryBody {
 	mass: f64,
@@ -79,7 +74,7 @@ fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> V
 
 fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
 	for item in planetary_bodies_r {
-		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
+		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], COLOUR_BLACK)
 	}
 }
 
@@ -93,14 +88,14 @@ fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
 	//panic::set_hook(Box::new(console_error_panic_hook::hook));
 	
-	//let FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap(); // Claims that .await is only allowed inside async function, so i moved it here. However, it's still complaining.
+	let FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap(); // Claims that .await is only allowed inside async function, so i moved it here. However, it's still complaining.
 	//let FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").await.unwrap();
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 	let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], location: [{macroquad::prelude::screen_width() * 0.75} as f64, 0.0]});
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], location: [{macroquad::prelude::screen_width() * 0.25} as f64, 0.0]});
 	'main_cycle: loop {
-		clear_background(macroquad::prelude::WHITE);
+		clear_background(COLOUR_WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
 		/*{
 			let font = FONT_SPECTRAL_LIGHT.clone();
