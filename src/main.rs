@@ -59,7 +59,7 @@ impl PlanetaryBody {
 		self.location[1] = self.location[1] + self.velocity[1] * delta_time;
 	}
 	//fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(Pow(body_1.location[0] - body_2.location[0], 2) + Pow(body_1.location[1] - body_2.location[1], 2))}
-	fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {body_1.radius + body_2.radius < PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2)}
+	//fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {body_1.radius + body_2.radius < f64::sqrt(Pow(body_2.location[0] - body_1.location[0], 2) + Pow(body_2.location[1] - body_1.location[1], 2))}
 } // this is the end of the impl block
 
 fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> Vec::<PlanetaryBody> {
