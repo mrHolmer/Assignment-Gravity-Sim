@@ -14,8 +14,8 @@ fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) { // ca
 
 // const UNIVERSAL_GRAVITATIONAL_CONSTANT: f64 = (6.6743015 / (10 ^ 11)); // Commented out to make physics not require huge values for mass to do gravity
 const UNIVERSAL_GRAVITATIONAL_CONSTANT: f64 = 1.0;
-const COLOUR_WHITE = macroquad::prelude::WHITE;
-const COLOUR_BLACK = macroquad::prelude::BLACK;
+const COLOUR_WHITE: macroquad::prelude::Color = macroquad::prelude::WHITE;
+const COLOUR_BLACK: macroquad::prelude::Color = macroquad::prelude::BLACK;
 
 #[derive(Debug, Clone)]
 struct PlanetaryBody {
