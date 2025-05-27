@@ -6,8 +6,8 @@ use macroquad::prelude::*;
 extern crate num_traits;
 use num_traits::pow::pow as Pow;
 //
-extern crate console_error_panic_hook;
-use std::panic;
+//extern crate console_error_panic_hook;
+//use std::panic;
 //
 
 //
