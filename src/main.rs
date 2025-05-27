@@ -53,7 +53,7 @@ impl PlanetaryBody {
 		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass);
 		body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass);
 		body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass);
-	}//*/
+	}*/
 	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
 		self.location[0] = self.location[0] + self.velocity[0] * delta_time;
 		self.location[1] = self.location[1] + self.velocity[1] * delta_time;
@@ -113,7 +113,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 		println!("{:#?}", &planetary_bodies);
 		let delta_time = get_frame_time();
 		planetary_bodies = PhysicsTick(planetary_bodies, delta_time as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
-				next_frame().await
+		next_frame().await
 	}
 	
 }
