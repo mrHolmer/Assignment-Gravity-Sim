@@ -11,7 +11,6 @@ use std::panic;
 //
 
 //
-fn RandomNumberBt0and1() -> f64 {panic!(); 0.5} // Not used yet
 fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) { // called this because it's the local version
 	macroquad::prelude::draw_circle(a as f32, b as f32, c as f32, d)
 }
@@ -43,10 +42,10 @@ impl PlanetaryBody {
 		self.velocity[1] += delta_time * force * vectors[0][1] / self.mass;
 		self
 	}
-	fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
+	/*fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
 		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
 		let y_displacement: f64 = body_2.location[1] - body_1.location[1];
-		let distance: f64 = f64::sqrt(Pow((x_displacement), 2) + Pow((y_displacement), 2));
+		let distance: f64 = f64::sqrt(Pow(x_displacement, 2) + Pow(y_displacement, 2));
 		// if distance = (0 as f64) {break} // this should throw an error somehow
 		let force: f64 = UNIVERSAL_GRAVITATIONAL_CONSTANT * body_1.mass * body_2.mass / Pow(distance, 2);
 		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
@@ -54,12 +53,12 @@ impl PlanetaryBody {
 		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass);
 		body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass);
 		body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass);
-	}
+	}//*/
 	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
 		self.location[0] = self.location[0] + self.velocity[0] * delta_time;
 		self.location[1] = self.location[1] + self.velocity[1] * delta_time;
 	}
-	fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(Pow(body_1.location[0] - body_2.location[0], 2) + Pow(body_1.location[1] - body_2.location[1], 2))}
+	//fn PairwiseFindDistanceBetween(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> f64 {f64::sqrt(Pow(body_1.location[0] - body_2.location[0], 2) + Pow(body_1.location[1] - body_2.location[1], 2))}
 	fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {body_1.radius + body_2.radius < PlanetaryBody::PairwiseFindDistanceBetween(body_1, body_2)}
 } // this is the end of the impl block
 
