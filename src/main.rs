@@ -15,8 +15,6 @@ fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) { // ca
 
 // const UNIVERSAL_GRAVITATIONAL_CONSTANT: f64 = (6.6743015 / (10 ^ 11)); // Commented out to make physics not require huge values for mass to do gravity
 const UNIVERSAL_GRAVITATIONAL_CONSTANT: f64 = 1.0;
-const COLOUR_WHITE: macroquad::prelude::Color = macroquad::prelude::WHITE;
-const COLOUR_BLACK: macroquad::prelude::Color = macroquad::prelude::BLACK;
 
 #[derive(Debug, Clone)]
 struct PlanetaryBody {
@@ -75,7 +73,7 @@ fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> V
 
 fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 3]) {
 	for item in planetary_bodies_r {
-		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], COLOUR_BLACK)
+		LocalDrawCircle(item.location[0] * view_attributes[2] + view_attributes[0], item.location[1] * view_attributes[2] + view_attributes[1], item.radius * view_attributes[2], macroquad::prelude::BLACK)
 	}
 }
 
@@ -96,15 +94,15 @@ async fn main() {  // This is the function that is normally set to immediately e
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, 5.0], location: [{macroquad::prelude::screen_width() * 0.75} as f64, 0.0]});
 	planetary_bodies.push(PlanetaryBody {mass: 1.0, radius: (macroquad::prelude::screen_height() as f64) / 20.0, velocity: [0.0, -5.0], location: [{macroquad::prelude::screen_width() * 0.25} as f64, 0.0]});
 	'main_cycle: loop {
-		clear_background(COLOUR_WHITE);
+		clear_background(macroquad::prelude::WHITE);
 		RenderBodies(&planetary_bodies, view_attributes);
 		/*{
 			let font = FONT_SPECTRAL_LIGHT.clone();
-			macroquad::text::draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, COLOUR_BLACK);
-			macroquad::text::draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
+			macroquad::text::draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, macroquad::prelude::BLACK);
+			macroquad::text::draw_text("hello", 0.0, 0.0, 20.0, macroquad::prelude::BLACK);
 		}*/
-		//fonts.draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, COLOUR_BLACK);
-		//fonts.draw_text("hello", 0.0, 0.0, 20.0, COLOUR_BLACK);
+		//fonts.draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, macroquad::prelude::BLACK);
+		//fonts.draw_text("hello", 0.0, 0.0, 20.0, macroquad::prelude::BLACK);
 		println!("{:#?}", &planetary_bodies);
 		let delta_time = get_frame_time();
 		planetary_bodies = PhysicsTick(planetary_bodies, delta_time as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
