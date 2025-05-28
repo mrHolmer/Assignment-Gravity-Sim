@@ -36,18 +36,6 @@ impl PlanetaryBody {
 		self.velocity[1] += delta_time * force * vectors[0][1] / self.mass;
 		self
 	}
-	/*fn PairwiseAdjustVelocityForGravity(body_1: &mut PlanetaryBody, body_2: &mut PlanetaryBody, delta_time: f64) {
-		let x_displacement: f64 = body_2.location[0] - body_1.location[0];
-		let y_displacement: f64 = body_2.location[1] - body_1.location[1];
-		let distance: f64 = f64::sqrt(Pow(x_displacement, 2) + Pow(y_displacement, 2));
-		// if distance = (0 as f64) {break} // this should throw an error somehow
-		let force: f64 = UNIVERSAL_GRAVITATIONAL_CONSTANT * body_1.mass * body_2.mass / Pow(distance, 2);
-		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
-		body_1.velocity[0] = body_1.velocity[0] + (delta_time * force * vectors[0][0] / body_1.mass);
-		body_1.velocity[1] = body_1.velocity[1] + (delta_time * force * vectors[0][1] / body_1.mass);
-		body_2.velocity[0] = body_2.velocity[0] + (delta_time * force * vectors[1][0] / body_2.mass);
-		body_2.velocity[1] = body_2.velocity[1] + (delta_time * force * vectors[1][1] / body_2.mass);
-	}*/
 	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
 		self.location[0] = self.location[0] + self.velocity[0] * delta_time;
 		self.location[1] = self.location[1] + self.velocity[1] * delta_time;
@@ -103,7 +91,7 @@ async fn main() {  // This is the function that is normally set to immediately e
 		}*/
 		//fonts.draw_text("hello", view_attributes[0] as f32, view_attributes[1] as f32, 20.0, macroquad::prelude::BLACK);
 		//fonts.draw_text("hello", 0.0, 0.0, 20.0, macroquad::prelude::BLACK);
-		println!("{:#?}", &planetary_bodies);
+		//println!("{:#?}", &planetary_bodies);
 		let delta_time = get_frame_time();
 		planetary_bodies = PhysicsTick(planetary_bodies, delta_time as f64); //changed to just pass the bodies back and forth to get around mutable reference issues
 		next_frame().await
