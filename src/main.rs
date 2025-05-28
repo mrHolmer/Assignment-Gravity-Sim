@@ -1,6 +1,7 @@
 
 extern crate macroquad;
 use macroquad::prelude::*;
+use macroquad::text::*;
 extern crate num_traits;
 use num_traits::pow::pow as Pow;
 //extern crate console_error_panic_hook; // causes gray screen
@@ -88,7 +89,7 @@ fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
 	//panic::set_hook(Box::new(console_error_panic_hook::hook));
 	
-	//let FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap(); // Claims that .await is only allowed inside async function, so i moved it here. However, it's still complaining.
+	let FONT_SPECTRAL_LIGHT: macroquad::text::Font = load_ttf_font("./fonts/Spectral-Light.ttf").await.unwrap(); // Claims that .await is only allowed inside async function, so i moved it here. However, it's still complaining.
 	//let FONT_SPECTRAL_LIGHT_ITALIC: macroquad::text::Font = load_ttf_font("./fonts/Spectral-LightItalic.ttf").await.unwrap();
 	let mut view_attributes: [f64; 3] = [(macroquad::prelude::screen_width() as f64) / 2.0, (macroquad::prelude::screen_height() as f64) / 2.0, 1.0];
 	let mut planetary_bodies: Vec<PlanetaryBody> = Vec::<PlanetaryBody>::with_capacity(64);
