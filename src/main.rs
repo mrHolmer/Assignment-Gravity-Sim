@@ -6,8 +6,7 @@ extern crate num_traits;
 use num_traits::pow::pow as Pow;
 //extern crate console_error_panic_hook; // causes gray screen
 //use std::panic;
-
-
+    
 
 fn LocalDrawCircle(a: f64, b: f64, c: f64, d: macroquad::prelude::Color) { // called this because it's the local version
 	macroquad::prelude::draw_circle(a as f32, b as f32, c as f32, d)
@@ -70,6 +69,9 @@ fn RenderBodies(planetary_bodies_r: &Vec<PlanetaryBody>, view_attributes: [f64; 
 //
 
 //
+
+#[cfg(target_arch = "wasm32")]
+use console_error_panic_hook;
 
 #[macroquad::main("Assignment-Gravity-Sim")]
 async fn main() {  // This is the function that is normally set to immediately execute on starting the program. 
