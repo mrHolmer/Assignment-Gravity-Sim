@@ -52,8 +52,8 @@ fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> V
 	}
 	for first_index in 1..(number_of_bodies-1) {
 		for second_index in first_index..number_of_bodies {
-			planetary_bodies[first_index] = planetary_bodies[first_index].clone().SelfAdjustVelocityForGravityToOtherObject(planetary_bodies.get(second_index), delta_time);
-			planetary_bodies[second_index] = planetary_bodies[second_index].clone().SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies.get(first_index), delta_time);
+			planetary_bodies[first_index] = planetary_bodies[first_index].clone().SelfAdjustVelocityForGravityToOtherObject(planetary_bodies.get(second_index).unwrap(), delta_time);
+			planetary_bodies[second_index] = planetary_bodies[second_index].clone().SelfAdjustVelocityForGravityToOtherObject(&planetary_bodies.get(first_index).unwrap(), delta_time);
 		}; 
 	};
 	return planetary_bodies
