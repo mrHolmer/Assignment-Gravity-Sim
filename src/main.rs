@@ -27,7 +27,7 @@ struct PlanetaryBody {
 
 // The impl block defines properties of the type specified. Here, the type specified is PlanetaryBody. 
 impl PlanetaryBody {  
-	fn SelfAdjustVelocityForGravityToOtherObject(self: mut Self, body_2_r: &PlanetaryBody, delta_time: f64) -> PlanetaryBody {
+	fn SelfAdjustVelocityForGravityToOtherObject(mut self, body_2_r: &PlanetaryBody, delta_time: f64) -> PlanetaryBody {
 		let x_displacement: f64 = body_2_r.location[0] - self.location[0];
 		let y_displacement: f64 = body_2_r.location[1] - self.location[1];
 		let distance: f64 = f64::sqrt((x_displacement * x_displacement) + (y_displacement * y_displacement));
@@ -36,9 +36,10 @@ impl PlanetaryBody {
 		self.velocity[1] += delta_time * acceleration * y_displacement / distance;
 		return self
 	}
-	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
+	fn SelfAdjustLocationForVelocity(mut self, delta_time: f64) {
 		self.location[0] += self.velocity[0] * delta_time;
 		self.location[1] += self.velocity[1] * delta_time;
+		return self
 	}
 	//fn PairwiseCheckForCollision(body_1: &PlanetaryBody, body_2: &PlanetaryBody) -> bool {body_1.radius + body_2.radius < f64::sqrt(Pow(body_2.location[0] - body_1.location[0], 2) + Pow(body_2.location[1] - body_1.location[1], 2))}
 } // this is the end of the impl block
@@ -46,8 +47,8 @@ impl PlanetaryBody {
 fn PhysicsTick(mut planetary_bodies: Vec::<PlanetaryBody>, delta_time: f64) -> Vec::<PlanetaryBody> {
 	//'collision_checks: loop {break 'collision_checks;} // check and handle collisions. break added temporarily, commented out for skipping initially
 	let number_of_bodies: usize = planetary_bodies.len();
-	for index in 0..{number_of_bodies - 1} {
-		planetary_bodies[index].SelfAdjustLocationForVelocity(delta_time)
+	for index in 0..(number_of_bodies - 1) {
+		planetary_bodies[index] = planetary_bodies[index].clone().SelfAdjustLocationForVelocity(delta_time)
 	}
 	for first_index in 1..(number_of_bodies-1) {
 		for second_index in first_index..number_of_bodies {
