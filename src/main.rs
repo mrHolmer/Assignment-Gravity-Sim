@@ -30,12 +30,11 @@ impl PlanetaryBody {
 	fn SelfAdjustVelocityForGravityToOtherObject(mut self, body_2_r: &PlanetaryBody, delta_time: f64) -> PlanetaryBody {
 		let x_displacement: f64 = body_2_r.location[0] - self.location[0];
 		let y_displacement: f64 = body_2_r.location[1] - self.location[1];
-		let distance: f64 = f64::sqrt(Pow(x_displacement, 2) + Pow(y_displacement, 2));
-		let acceleration: f64 = UNIVERSAL_GRAVITATIONAL_CONSTANT * body_2_r.mass / Pow(distance, 2);
-		let vectors: [[f64; 2]; 2] = [[x_displacement / distance, y_displacement / distance], [0.0 - x_displacement / distance, 0.0 - y_displacement / distance]];
-		self.velocity[0] += delta_time * acceleration * vectors[0][0];
-		self.velocity[1] += delta_time * acceleration * vectors[0][1];
-		self
+		let distance: f64 = f64::sqrt((x_displacement * x_displacement) + (y_displacement * y_displacement));
+		let acceleration: f64 = UNIVERSAL_GRAVITATIONAL_CONSTANT * body_2_r.mass / (distance * distance);
+		self.velocity[0] += delta_time * acceleration * x_displacement / distance;
+		self.velocity[1] += delta_time * acceleration * y_displacement / distance;
+		return self
 	}
 	fn SelfAdjustLocationForVelocity(self: &mut Self, delta_time: f64) {
 		self.location[0] = self.location[0] + self.velocity[0] * delta_time;
