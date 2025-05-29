@@ -36,7 +36,7 @@ impl PlanetaryBody {
 		self.velocity[1] += delta_time * acceleration * y_displacement / distance;
 		return self
 	}
-	fn SelfAdjustLocationForVelocity(mut self, delta_time: f64) {
+	fn SelfAdjustLocationForVelocity(mut self, delta_time: f64) -> PlanetaryBody {
 		self.location[0] += self.velocity[0] * delta_time;
 		self.location[1] += self.velocity[1] * delta_time;
 		return self
